@@ -67,6 +67,12 @@ module Rack
           end
         end
 
+        file_name = "#{uri.path.split("/").last}-#{Time.now.strftime("%Y%m%d%H%M%S")}"
+
+        open "./tmp/#{file_name}", 'w' do |f|
+          f << JSON.pretty_generate(JSON.parse(body))
+        end
+
         [res.code, create_response_headers(res), [body]]
       }
     end
